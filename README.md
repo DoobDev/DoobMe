@@ -2,7 +2,7 @@
 A private, open source, Twitch bot.
 #### https://twitch.tv/DoobMe/about
 
-## Can I add this to my channeL?
+## Can I add this to my channel?
 No! Right now, it's a **private** open source bot. 
 
 ## Why the name "Doob**Me**"
