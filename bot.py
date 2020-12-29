@@ -20,28 +20,29 @@ class Bot(commands.Bot):
             client_id=os.environ.get("client_id"),
             nick=config["nickname"],
             prefix=config["prefix"],
-            initial_channels=[
-                "mmattbtw",
-                "DoobMe",
-                "C3AGLE",
-            ],  # Don't know how to put lists into json yet, so hard code for now.
+            initial_channels=config["channels"],
         )
 
     async def event_ready(self):
         print(f"Ready | {self.nick}")
 
     async def event_message(self, message):
-        print("[MESSAGE LOGS] " + message.author.name + " - " + message.content)
+        print(
+            f"[MESSAGE LOGS] ({message.channel.name}) "
+            + message.author.name
+            + " - "
+            + message.content
+        )
         await self.handle_commands(message)
 
-    @commands.command(name="ping")
+    @commands.command(name="ping", aliases=["ding"])
     async def test_command(self, ctx):
         await ctx.send(f"FeelsDankMan 🔔 ding @{ctx.author.name}")
 
     @commands.command(name="commands", aliases=["help"])
     async def help_command(self, ctx):
         await ctx.send(
-            "You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
+            f"{ctx.author.name}, You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
         )
 
 
