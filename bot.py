@@ -5,6 +5,11 @@ import os
 
 import dotenv
 
+import json
+
+with open("config.json") as config_file:
+    config = json.load(config_file)
+
 dotenv.load_dotenv()
 
 
@@ -13,9 +18,13 @@ class Bot(commands.Bot):
         super().__init__(
             irc_token=os.environ.get("TOKEN"),
             client_id=os.environ.get("client_id"),
-            nick="DoobMe",
-            prefix="!",
-            initial_channels=["mmattbtw", "DoobMe", "C3AGLE"],
+            nick=config["nickname"],
+            prefix=config["prefix"],
+            initial_channels=[
+                "mmattbtw",
+                "DoobMe",
+                "C3AGLE",
+            ],  # Don't know how to put lists into json yet, so hard code for now.
         )
 
     async def event_ready(self):
@@ -28,6 +37,12 @@ class Bot(commands.Bot):
     @commands.command(name="ping")
     async def test_command(self, ctx):
         await ctx.send(f"FeelsDankMan 🔔 ding @{ctx.author.name}")
+
+    @commands.command(name="commands", aliases=["help"])
+    async def help_command(self, ctx):
+        await ctx.send(
+            "You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
+        )
 
 
 bot = Bot()
