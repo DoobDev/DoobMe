@@ -45,6 +45,15 @@ class Bot(commands.Bot):
             f"{ctx.author.name}, You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
         )
 
+    @commands.command(name="spam")
+    async def spam_command(self, ctx, time: int, *, message: str):
+        if "moderator" or "broadcaster" in ctx.author.badges:
+            for i in range(0, time):
+                await ctx.send(message)
+                print(time)
+        else:
+            await ctx.send("MODS only LUL")
+
 
 bot = Bot()
 bot.run()
