@@ -1,0 +1,11 @@
+{
+"Create Twitch Command": {
+  "prefix": "ctc",
+  "body": [
+    "    @commands.command(name=\"${1:name}\")",
+    "    async def ${1:name}_command(self, ctx):",
+    "        await ctx.send(f\"${1:message}\")"
+  ],
+  "description": "Create Twitch Command"
+}
+}
