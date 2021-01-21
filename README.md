@@ -1,5 +1,5 @@
 # DoobMe [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-A private, open source, Twitch bot.
+A private, open source, Twitch bot. (project on hiatus for now)
 #### https://twitch.tv/DoobMe/about
 
 ## Can I add this to my channel?
