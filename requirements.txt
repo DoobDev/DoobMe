@@ -7,4 +7,4 @@ python_dotenv == 0.17.1
 
 twitchio == 1.2.3
 
-black==21.4b2
+black==21.5b0
