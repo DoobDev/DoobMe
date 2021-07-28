@@ -35,6 +35,9 @@ class Bot(commands.Bot):
         )
         await self.handle_commands(message)
 
+        if config["locked"]:
+            await message.channel.timeout(user=message.author.name, duration=1)
+
     @commands.command(name="ping", aliases=["ding"])
     async def test_command(self, ctx):
         await ctx.send(f"FeelsDankMan 🔔 ding @{ctx.author.name}")
@@ -54,6 +57,8 @@ class Bot(commands.Bot):
         else:
             await ctx.send("MODS only LUL")
 
+
+    
 
 bot = Bot()
 bot.run()

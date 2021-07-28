@@ -1,5 +1,6 @@
 {
     "nickname" : "DoobMe",
     "prefix" : "!",
-    "channels" : ["mmatt625", "c3agle", "doobme"]
+    "channels" : ["mmattbtw", "doobme"],
+    "locked" : true
 }
