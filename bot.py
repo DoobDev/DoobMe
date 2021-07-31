@@ -18,7 +18,7 @@ dotenv.load_dotenv()
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
-            irc_token=os.environ.get("TOKEN"),
+            token=os.environ.get("TOKEN"),
             client_id=os.environ.get("client_id"),
             nick=config["nickname"],
             prefix=config["prefix"],
@@ -29,35 +29,27 @@ class Bot(commands.Bot):
         print(f"Ready | {self.nick}")
 
     async def event_message(self, message):
-        print(
-            f"[MESSAGE LOGS] ({message.channel.name}) "
-            + message.author.name
-            + " - "
-            + message.content
-        )
         await self.handle_commands(message)
 
         if config["locked"]:
-            await message.channel.timeout(user=message.author.name, duration=1)
+            await message.channel.send(f".timeout {message.author.display_name} 1")
 
     @commands.command(name="ping", aliases=["ding"])
     async def test_command(self, ctx):
-        await ctx.send(f"FeelsDankMan 🔔 ding @{ctx.author.name}")
+        await ctx.send(f"FeelsDankMan 🔔 ding @{ctx.author.display_name}")
 
     @commands.command(name="commands", aliases=["help"])
     async def help_command(self, ctx):
         await ctx.send(
-            f"{ctx.author.name}, You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
+            f"{ctx.author.display_name}, You can find all of the commands here FeelsGoodMan 👉 https://mmatt.gitbook.io/doobme/doobme-commands"
         )
 
     @commands.command(name="spam")
     async def spam_command(self, ctx, time: int, *, message: str):
-        if "moderator" or "broadcaster" in ctx.author.badges:
-            for i in range(0, time):
+        if ctx.author.is_mod:
+            for _ in range(time):
                 await ctx.send(message)
                 print(time)
-        else:
-            await ctx.send("MODS only LUL")
 
     @commands.command(name="lastfm", aliases=["fm"])
     async def lastfm_command(self, ctx, username: str):
@@ -77,9 +69,9 @@ class Bot(commands.Bot):
                 ts = int(data["registered"]["unixtime"])
 
                 playcount = f"{data['playcount']}"
-                
+
                 country = data["country"]
-                
+
                 #registered_time = datetime.utcfromtimestamp(ts).strftime("%m-%d-%Y | %H:%M:%S")
 
                 async with request("GET", loved_tracks_url) as loved:
@@ -90,7 +82,7 @@ class Bot(commands.Bot):
                 async with request("GET", top_tracks_url) as tags:
                     tags_data = (await tags.json())["toptags"]
 
-                    tags_list = list()
+                    tags_list = []
 
                     for i in tags_data["tag"]:
                         tags_list.append(i["name"])
