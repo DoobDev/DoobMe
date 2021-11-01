@@ -5,4 +5,4 @@ python_dotenv == 0.19.1
 
 # C:\Users\matt\doobme\bot.py: 1
 
-twitchio == 2.0.6
+twitchio == 2.1.1
